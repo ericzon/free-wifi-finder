@@ -9,7 +9,7 @@
 
 <ion-content>
   <div padding>
-      <ion-icon name="search"></ion-icon><input type="text" name="listFilter" [(ngModel)]="listFilter" placeholder="Filter by terms" />
+      <ion-icon name="search"></ion-icon><input type="text" name="listFilter" [(ngModel)]="listFilter" placeholder="Filter by terms" padding />
   </div>
   <div [hidden]="wifiPointList && wifiPointList.length > 0" padding>
       Loading wifi points...
