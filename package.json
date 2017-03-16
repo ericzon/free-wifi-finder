@@ -1,7 +1,8 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "free-wifi-finder",
+  "author": "Eric Lara <ericzon@gmail.com>",
+  "description": "The main objective of this app is just play with hybrid app development. Moreover, it's always interesting to have an updated map of free wifi points in Barcelona, right? :)",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -46,6 +47,5 @@
       "version": "",
       "locator": "ios"
     }
-  ],
-  "description": "wifipoints: An Ionic project"
+  ]
 }
