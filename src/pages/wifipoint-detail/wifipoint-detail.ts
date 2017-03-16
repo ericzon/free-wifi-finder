@@ -28,10 +28,8 @@ export class WifipointDetailPage {
 
   loadMap() {
 
-  console.log("LAT: ",this.wifiPoint.LATITUD);
-  console.log("LNG: ",this.wifiPoint.LONGITUD);
-    let location = new GoogleMapsLatLng(this.wifiPoint.LATITUD, this.wifiPoint.LONGITUD);// -34.9290,138.6010
-    //let location = new GoogleMapsLatLng(-34.9290,138.6010);
+    console.log("coords: ",this.wifiPoint);
+    let location = new GoogleMapsLatLng(this.wifiPoint.LATITUD, this.wifiPoint.LONGITUD);
  
     this.map = new GoogleMap('map', {
       'backgroundColor': 'white',
