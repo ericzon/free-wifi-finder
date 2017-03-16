@@ -1,0 +1,22 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Wifi points</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <div padding>
+      <ion-icon name="search"></ion-icon><input type="text" name="listFilter" [(ngModel)]="listFilter" placeholder="Filter by terms" />
+  </div>
+  <div [hidden]="wifiPointList && wifiPointList.length > 0" padding>
+      Loading wifi points...
+  </div>
+  <ion-list>
+    <ion-item *ngFor="let wifiPoint of wifiPointList | WifipointsFilter:listFilter | orderBy: [ 'ADRECA' ]" (click)="goToDetailPage( wifiPoint )">
+      <ion-icon name="pin"></ion-icon><span padding>{{wifiPoint.ADRECA}}</span>
+    </ion-item>
+  </ion-list>
+</ion-content>
