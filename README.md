@@ -2,7 +2,7 @@
 #### Barcelona Edition
 The main objective of this app is just play with hybrid app development. Moreover, it's always interesting to have an updated map of free wifi points in Barcelona, right? :)
 
-[![](http://i.imgur.com/CfuLHEB.png)]
+![Detail page snapshot](http://i.imgur.com/CfuLHEB.png)
 
 #### Platform used
 
