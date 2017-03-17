@@ -25,7 +25,7 @@ export class WifipointsService {
         .subscribe( data => {
           resolve(data);
         });
-    } ); 
+    }); 
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
-import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng } from 'ionic-native';
+import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, 
+          Geolocation, GoogleMapsMarker, GoogleMapsMarkerOptions, Toast } from 'ionic-native';
 
 @Component({
   selector: 'page-wifipoint-detail',
@@ -8,8 +9,10 @@ import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng } from 'ionic-native';
 })
 export class WifipointDetailPage {
 
-  wifiPoint: any;
   map: GoogleMap;
+  wifiPoint: any;
+  myLatLng: any;
+  wifipointLatLng: any;
 
   constructor(
       public navCtrl: NavController,
@@ -18,7 +21,7 @@ export class WifipointDetailPage {
     ) {
     this.wifiPoint = this.navParams.get('wifiPoint');
     platform.ready().then(() => {
-        this.loadMap();
+        this.getCurrentPosition();
     });
   }
 
@@ -27,10 +30,6 @@ export class WifipointDetailPage {
   }
 
   loadMap() {
-
-    console.log("coords: ",this.wifiPoint);
-    let location = new GoogleMapsLatLng(this.wifiPoint.LATITUD, this.wifiPoint.LONGITUD);
- 
     this.map = new GoogleMap('map', {
       'backgroundColor': 'white',
       'controls': {
@@ -46,7 +45,7 @@ export class WifipointDetailPage {
         'zoom': true
       },
       'camera': {
-        'latLng': location,
+        'latLng': this.myLatLng,
         'tilt': 30,
         'zoom': 15,
         'bearing': 50
@@ -55,7 +54,47 @@ export class WifipointDetailPage {
 
     this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
         console.log('Map is ready!');
+        const currentPositionMrk = {
+          coords: this.myLatLng,
+          title: 'My position'
+        };
+        this.setMarker(currentPositionMrk);
+        let wifipointMrk = {
+          coords: this.wifipointLatLng,
+          title: 'Free Wifi!'
+        };
+        this.setMarker(wifipointMrk);
     });
+  }
+
+  setMarker(markerInfo){
+    if(markerInfo.coords) {
+      let markerOptions: GoogleMapsMarkerOptions = {
+        position: markerInfo.coords,
+        title: markerInfo.title
+      };
+      this.map.addMarker(markerOptions).then((marker: GoogleMapsMarker) => {
+          marker.showInfoWindow();
+      });
+    } else {
+      Toast.show("No se ha podido obtener la posición del marker", '5000', 'bottom').subscribe( toast => {
+          console.log(toast);
+      });
+    }
+  }
+
+  getCurrentPosition() {
+    Geolocation.getCurrentPosition().then( position => {
+      let lat = position.coords.latitude;
+      let lng = position.coords.longitude;
+
+      this.myLatLng = new GoogleMapsLatLng(lat, lng);
+
+      console.log("wifipoint coords: ",this.wifiPoint);
+      this.wifipointLatLng = new GoogleMapsLatLng(this.wifiPoint.LATITUD, this.wifiPoint.LONGITUD);
+
+      this.loadMap();
+    } );
   }
 
 }

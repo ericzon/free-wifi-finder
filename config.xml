@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.wifipoints551813" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>com.eric.wifipoints</name>
+    <name>Free Wifi Finder</name>
     <description>Free Wifipoints on Barcelona</description>
     <author email="ericzon@gmail.com" href="http://ionicframework.com/">Eric Lara</author>
     <content src="index.html" />
@@ -36,5 +36,7 @@
     <plugin name="cordova-plugin-statusbar" spec="2.2.1" />
     <plugin name="cordova-plugin-device" spec="1.1.4" />
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
+    <plugin name="cordova-plugin-geolocation" spec="~2.4.2" />
     <plugin name="cordova-plugin-googlemaps" spec="~1.4.0" />
+    <plugin name="cordova-plugin-x-toast" spec="~2.6.0" />
 </widget>
