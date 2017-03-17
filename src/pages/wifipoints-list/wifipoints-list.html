@@ -24,8 +24,8 @@
   </div>
   <ion-list>
     <!-- let wifiPoint of wifiPointList | WifipointsFilter:listFilter | orderBy: [ 'ADRECA' ] -->
-    <ion-item *ngFor="let wifiPoint of wifiPointList | orderBy: [ 'ADRECA' ]" (click)="goToDetailPage( wifiPoint )">
+    <button ion-item *ngFor="let wifiPoint of wifiPointList | orderBy: [ 'ADRECA' ]" (click)="goToDetailPage( wifiPoint )">
       <ion-icon name="pin"></ion-icon><span padding>{{wifiPoint.ADRECA}}</span>
-    </ion-item>
+    </button>
   </ion-list>
 </ion-content>

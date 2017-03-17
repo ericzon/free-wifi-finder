@@ -29,6 +29,7 @@ export class WifipointsService {
     }); 
   }
 
+  // next step: move to API
   private filterItems(items: any[], searchTerms: string) {
     searchTerms = searchTerms.toLowerCase();
     return items.filter(item => {

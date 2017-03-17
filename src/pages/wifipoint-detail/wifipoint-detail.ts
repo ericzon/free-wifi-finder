@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform, LoadingController } from 'ionic-angular';
 import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, 
           Geolocation, GoogleMapsMarker, GoogleMapsMarkerOptions, Toast } from 'ionic-native';
 
@@ -13,15 +13,25 @@ export class WifipointDetailPage {
   wifiPoint: any;
   myLatLng: any;
   wifipointLatLng: any;
+  loader: any;
 
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      public platform: Platform
+      public platform: Platform,
+      public loadingCtrl: LoadingController
     ) {
     this.wifiPoint = this.navParams.get('wifiPoint');
+    this.loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      //duration: 3000
+    });
+    this.loader.present();
     platform.ready().then(() => {
-        this.getCurrentPosition();
+      this.getCurrentPosition();
+    }).catch(error => {
+      console.log("Error: ",error);
+      this.loader.present();
     });
   }
 
@@ -53,6 +63,7 @@ export class WifipointDetailPage {
     });
 
     this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
+        this.loader.dismiss();
         console.log('Map is ready!');
         const currentPositionMrk = {
           coords: this.myLatLng,
