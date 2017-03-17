@@ -11,10 +11,6 @@ export class ConfigService {
     this.config = config;
   }
 
-  prueba() {
-    return 1;
-  }
-
   getConfig():any {
     return this.config;
   }

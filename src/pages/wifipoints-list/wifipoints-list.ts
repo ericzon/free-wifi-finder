@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
+import 'rxjs/add/operator/debounceTime';
 import { WifipointsService } from '../../providers/wifipoints-service';
 import { WifipointDetailPage } from '../wifipoint-detail/wifipoint-detail';
 
@@ -10,23 +12,36 @@ import { WifipointDetailPage } from '../wifipoint-detail/wifipoint-detail';
 export class WifipointsListPage {
 
   wifiPointList: any[] = [];
-  listFilter: string = "";
+  searchTerms: string = "";
+  searchControl: FormControl;
+  isSearching: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public wifipointsService: WifipointsService
-  ) { }
+  ) {
+    this.searchControl = new FormControl();
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WifipointsListPage');
-    this.getAllWifipoints();
+    this.isSearching = true;
+    this.getFilteredWifipoints();
+    this.searchControl.valueChanges.debounceTime(700).subscribe(search => {
+      this.isSearching = false;
+      this.getFilteredWifipoints();
+    });
   }
 
-  private getAllWifipoints() {
-    this.wifipointsService.getAll().then( (data:any) => {
-      // console.log("DATA: ",data);
-      this.wifiPointList = data.bundle;
+  onSearchInput() {
+    this.isSearching = true;
+  }
+
+  private getFilteredWifipoints() {
+    this.wifipointsService.getFilteredItems(this.searchTerms).then( (data:any) => {
+      this.isSearching = false;
+      this.wifiPointList = data;
     })
   }
 

@@ -11,21 +11,34 @@ export class WifipointsService {
 
   constructor(
       public http: Http,
-      public configService: ConfigService
+      public configService: ConfigService,
     ) {
     console.log('Hello WifipointsService Provider');
     this.config = configService.getConfig();
   }
 
-  getAll() {
+  getFilteredItems(searchTerms: string) {
     return new Promise( (resolve, reject) => {
       this.http.get(this.config.mainAPIUrl + '/wifipoints')
         .map( res => res.json() )
         .catch((error:any) => Observable.throw(error.json().error || 'Server error'))
         .subscribe( data => {
-          resolve(data);
+          let filteredData = this.filterItems(data.bundle, searchTerms);
+          resolve(filteredData);
         });
     }); 
+  }
+
+  private filterItems(items: any[], searchTerms: string) {
+    searchTerms = searchTerms.toLowerCase();
+    return items.filter(item => {
+      let matchCase = !searchTerms || searchTerms === "" || (
+        (item.ADRECA.toLowerCase().indexOf(searchTerms) > -1)
+        || (item.NOM_BARRI.toLowerCase().indexOf(searchTerms) > -1)
+        || (item.NOM_DISTRICTE.toLowerCase().indexOf(searchTerms) > -1)
+      );
+      return matchCase;
+    });
   }
 
 }

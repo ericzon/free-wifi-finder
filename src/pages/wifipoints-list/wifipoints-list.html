@@ -10,18 +10,21 @@
 <ion-content>
   <div>
       <ion-searchbar 
-        [(ngModel)]="listFilter" 
+        [(ngModel)]="searchTerms"
+        [formControl]="searchControl"
+        (ionInput)="onSearchInput()"
         [showCancelButton]="true"
-        (ionCancel)="listFilter = ''"
+        (ionCancel)="searchTerms = ''"
         cancelButtonText="Cancel"
         placeholder="Filter by terms"
       ></ion-searchbar>
   </div>
-  <div [hidden]="wifiPointList && wifiPointList.length > 0" padding>
-      Loading wifi points...
+  <div *ngIf="isSearching" class="spinner-container" padding>
+      <ion-spinner></ion-spinner>
   </div>
   <ion-list>
-    <ion-item *ngFor="let wifiPoint of wifiPointList | WifipointsFilter:listFilter | orderBy: [ 'ADRECA' ]" (click)="goToDetailPage( wifiPoint )">
+    <!-- let wifiPoint of wifiPointList | WifipointsFilter:listFilter | orderBy: [ 'ADRECA' ] -->
+    <ion-item *ngFor="let wifiPoint of wifiPointList | orderBy: [ 'ADRECA' ]" (click)="goToDetailPage( wifiPoint )">
       <ion-icon name="pin"></ion-icon><span padding>{{wifiPoint.ADRECA}}</span>
     </ion-item>
   </ion-list>

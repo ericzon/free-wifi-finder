@@ -8,7 +8,6 @@ import { WifipointsListPage } from '../pages/wifipoints-list/wifipoints-list';
 import { WifipointDetailPage } from '../pages/wifipoint-detail/wifipoint-detail';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { WifipointsFilterPipe } from '../pipes/wifipoints-filter';
 import { OrderByPipe } from '../pipes/order-by';
 
 import { ConfigService } from '../providers/config-service';
@@ -23,7 +22,6 @@ import { WifipointsService } from '../providers/wifipoints-service';
     WifipointsListPage,
     WifipointDetailPage,
     TabsPage,
-    WifipointsFilterPipe,
     OrderByPipe
   ],
   imports: [
