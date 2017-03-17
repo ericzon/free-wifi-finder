@@ -4,10 +4,12 @@ The main objective of this app is just play with hybrid app development. Moreove
 
 ![Detail page snapshot](http://i.imgur.com/CfuLHEB.png)
 
-#### Platform used
+#### Tools used
 
-Ionic 2 (Angular 2 & Typescript)
-Open Data
+* Ionic 2 (Angular 2 & Typescript)
+* Open Data
+* [API in nodejs + Typescript](https://github.com/ericzon/nodets-bootstrap)
+
 
 #### Install dependencies
 
