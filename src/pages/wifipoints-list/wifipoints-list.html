@@ -22,9 +22,11 @@
   <div *ngIf="isSearching" class="spinner-container" padding>
       <ion-spinner></ion-spinner>
   </div>
-  <ion-list>
+  <ion-list [virtualScroll]="wifiPointList | orderBy: [ 'ADRECA' ]" [approxItemHeight]=" '50px' ">
     <!-- let wifiPoint of wifiPointList | WifipointsFilter:listFilter | orderBy: [ 'ADRECA' ] -->
-    <button ion-item *ngFor="let wifiPoint of wifiPointList | orderBy: [ 'ADRECA' ]" (click)="goToDetailPage( wifiPoint )">
+    <!-- <button ion-item *ngFor="let wifiPoint of wifiPointList | orderBy: [ 'ADRECA' ]" (click)="goToDetailPage( wifiPoint )"> -->
+    <button ion-item *virtualItem="let wifiPoint" (click)="goToDetailPage( wifiPoint )">
+      
       <ion-icon name="pin"></ion-icon><span padding>{{wifiPoint.ADRECA}}</span>
     </button>
   </ion-list>
