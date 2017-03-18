@@ -38,6 +38,10 @@ export class WifipointsListPage {
     this.isSearching = true;
   }
 
+  customTrackBy(index, item) {
+    return item._id;
+  }
+
   private getFilteredWifipoints() {
     this.wifipointsService.getFilteredItems(this.searchTerms).then( (data:any) => {
       this.isSearching = false;
