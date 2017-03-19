@@ -39,6 +39,11 @@ export class WifipointDetailPage {
     console.log('ionViewDidLoad WifipointDetailPage');
   }
 
+  ionViewWillLeave() {
+    console.log("ionViewDidLoad WifipointDetailPage");
+    this.loader.dismiss();    
+  }
+
   loadMap() {
     this.map = new GoogleMap('map', {
       'backgroundColor': 'white',
@@ -65,11 +70,13 @@ export class WifipointDetailPage {
     this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
         this.loader.dismiss();
         console.log('Map is ready!');
+        /*
         const currentPositionMrk = {
           coords: this.myLatLng,
           title: 'My position'
         };
         this.setMarker(currentPositionMrk);
+        */
         let wifipointMrk = {
           coords: this.wifipointLatLng,
           title: 'Free Wifi!'

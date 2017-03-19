@@ -1,13 +1,27 @@
 
 <ion-header>
 
+  <!--
   <ion-navbar>
     <ion-title>Wifi points</ion-title>
   </ion-navbar>
+  -->
+  <ion-toolbar color="primary">
+    <ion-searchbar 
+        [(ngModel)]="searchTerms"
+        [formControl]="searchControl"
+        (ionInput)="onSearchInput()"
+        [showCancelButton]="true"
+        (ionCancel)="searchTerms = ''"
+        cancelButtonText="Cancel"
+        placeholder="Filter by terms"
+      ></ion-searchbar>
+  </ion-toolbar>
 
 </ion-header>
 
 <ion-content>
+  <!--
   <div>
       <ion-searchbar 
         [(ngModel)]="searchTerms"
@@ -19,6 +33,7 @@
         placeholder="Filter by terms"
       ></ion-searchbar>
   </div>
+  -->
   <div *ngIf="isSearching" class="spinner-container" padding>
       <ion-spinner></ion-spinner>
   </div>
