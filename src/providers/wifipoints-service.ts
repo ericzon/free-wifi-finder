@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 //import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
 import { ConfigService } from './config-service';
+import { StorageService } from './storage';
 
 @Injectable()
 export class WifipointsService {
@@ -12,25 +13,44 @@ export class WifipointsService {
   constructor(
       public http: Http,
       public configService: ConfigService,
+      public storageService: StorageService
     ) {
     console.log('Hello WifipointsService Provider');
     this.config = configService.getConfig();
   }
 
-  getFilteredItems(searchTerms: string) {
+  private getAllWifipoints(): Promise<{}> { 
     return new Promise( (resolve, reject) => {
-      this.http.get(this.config.mainAPIUrl + '/wifipoints')
+      console.log("getAllWifipoints > from storage");
+      this.storageService.getAll().then(storedData => {
+        if(!storedData) {
+          throw new Error("There's no stored data");
+        }
+        resolve(storedData);
+      }).catch(error => {
+        console.log("getAllWifipoints > from API");
+        this.http.get(this.config.mainAPIUrl + '/wifipoints')
         .map( res => res.json() )
         .catch((error:any) => Observable.throw(error.json().error || 'Server error'))
         .subscribe( data => {
-          let filteredData = this.filterItems(data.bundle, searchTerms);
+          this.storageService.saveWifipoints(data.bundle);
+          resolve(data.bundle);
+        });
+      });
+    });      
+  }
+
+  getFilteredItems(searchTerms: string) {
+    return new Promise( (resolve, reject) => {
+      this.getAllWifipoints().then( data => {
+          let filteredData = this.filterItems(data, searchTerms);
           resolve(filteredData);
         });
-    }); 
+    });
   }
 
   // next step: move to API
-  private filterItems(items: any[], searchTerms: string) {
+  private filterItems(items: any, searchTerms: string) {
     searchTerms = searchTerms.toLowerCase();
     return items.filter(item => {
       let matchCase = !searchTerms || searchTerms === "" || (

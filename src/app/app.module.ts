@@ -13,6 +13,9 @@ import { OrderByPipe } from '../pipes/order-by';
 import { ConfigService } from '../providers/config-service';
 import { WifipointsService } from '../providers/wifipoints-service';
 
+import { Storage } from '@ionic/storage';
+import { StorageService } from '../providers/storage';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -39,6 +42,8 @@ import { WifipointsService } from '../providers/wifipoints-service';
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler}, 
+    Storage,
+    StorageService,
     ConfigService,
     WifipointsService
   ]
