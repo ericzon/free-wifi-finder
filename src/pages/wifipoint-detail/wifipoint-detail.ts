@@ -98,7 +98,7 @@ export class WifipointDetailPage {
         };
         console.log("mapDim -> ",mapDim);
         const points: any[] = [this.myLatLng, this.wifipointLatLng];
-        const suggestedZoom = this.mapService.getBoundsZoomLevel(points, mapDim);
+        const suggestedZoom = this.mapService.getBoundsZoomLevel(points, mapDim)-1;
         console.log("suggestedZoom -> ",suggestedZoom);
         this.map.setZoom(suggestedZoom);
     });
