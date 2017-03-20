@@ -15,6 +15,7 @@ import { WifipointsService } from '../providers/wifipoints-service';
 
 import { Storage } from '@ionic/storage';
 import { StorageService } from '../providers/storage';
+import { MapService } from '../providers/map-service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { StorageService } from '../providers/storage';
     Storage,
     StorageService,
     ConfigService,
-    WifipointsService
+    WifipointsService,
+    MapService
   ]
 })
 export class AppModule {}

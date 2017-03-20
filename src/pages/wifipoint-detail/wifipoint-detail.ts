@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform, LoadingController } from 'ionic-angular';
-import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, 
+import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsLatLngBounds,
           Geolocation, GoogleMapsMarker, GoogleMapsMarkerOptions, Toast } from 'ionic-native';
+import { MapService } from '../../providers/map-service';
 
 @Component({
   selector: 'page-wifipoint-detail',
@@ -19,7 +20,8 @@ export class WifipointDetailPage {
       public navCtrl: NavController,
       public navParams: NavParams,
       public platform: Platform,
-      public loadingCtrl: LoadingController
+      public loadingCtrl: LoadingController,
+      public mapService: MapService
     ) {
     this.wifiPoint = this.navParams.get('wifiPoint');
     this.loader = this.loadingCtrl.create({
@@ -62,7 +64,7 @@ export class WifipointDetailPage {
       'camera': {
         'latLng': this.myLatLng,
         'tilt': 30,
-        'zoom': 15,
+        'zoom': 11,
         'bearing': 50
       }
     });
@@ -70,18 +72,33 @@ export class WifipointDetailPage {
     this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
         this.loader.dismiss();
         console.log('Map is ready!');
-        /*
+        this.map.clear();
+        let latLngBounds = new GoogleMapsLatLngBounds([]);
         const currentPositionMrk = {
           coords: this.myLatLng,
           title: 'My position'
         };
         this.setMarker(currentPositionMrk);
-        */
+        latLngBounds.extend(this.myLatLng);
+        
         let wifipointMrk = {
           coords: this.wifipointLatLng,
           title: 'Free Wifi!'
         };
         this.setMarker(wifipointMrk);
+        latLngBounds.extend(this.wifipointLatLng);
+
+        this.map.setCenter(latLngBounds.getCenter());
+        const mapDiv = document.getElementById('map');
+        const mapDim = {
+          width: mapDiv.offsetWidth,
+          height: mapDiv.offsetHeight
+        };
+        console.log("mapDim -> ",mapDim);
+        const points: any[] = [this.myLatLng, this.wifipointLatLng];
+        const suggestedZoom = this.mapService.getBoundsZoomLevel(points, mapDim);
+        console.log("suggestedZoom -> ",suggestedZoom);
+        this.map.setZoom(suggestedZoom);
     });
   }
 
@@ -107,7 +124,6 @@ export class WifipointDetailPage {
       let lng = position.coords.longitude;
 
       this.myLatLng = new GoogleMapsLatLng(lat, lng);
-
       console.log("wifipoint coords: ",this.wifiPoint);
       this.wifipointLatLng = new GoogleMapsLatLng(this.wifiPoint.LATITUD, this.wifiPoint.LONGITUD);
 
