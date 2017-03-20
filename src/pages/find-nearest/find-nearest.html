@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Nearest wifi point</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <div>
+    Your current position:
+  </div>
+  <div>
+    {{ addressStr }}
+  </div>
+  <div *ngIf="isSearching" class="spinner-container" padding>
+      <ion-spinner></ion-spinner>
+  </div>
+  <button ion-button full color="primary" [disabled]="isSearching" (click)="searchNearestPoints()" round>Let's find a wifi :)</button>
+
+</ion-content>

@@ -1,30 +1,31 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { WifipointsListPage } from '../pages/wifipoints-list/wifipoints-list';
 import { WifipointDetailPage } from '../pages/wifipoint-detail/wifipoint-detail';
+import { FindNearestPage } from '../pages/find-nearest/find-nearest';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { OrderByPipe } from '../pipes/order-by';
 
+import { Storage } from '@ionic/storage';
+import { StorageService } from '../providers/storage';
 import { ConfigService } from '../providers/config-service';
 import { WifipointsService } from '../providers/wifipoints-service';
 
-import { Storage } from '@ionic/storage';
-import { StorageService } from '../providers/storage';
+
 import { MapService } from '../providers/map-service';
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
     ContactPage,
     HomePage,
     WifipointsListPage,
     WifipointDetailPage,
+    FindNearestPage,
     TabsPage,
     OrderByPipe
   ],
@@ -34,11 +35,11 @@ import { MapService } from '../providers/map-service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
     ContactPage,
     HomePage,
     WifipointsListPage,
     WifipointDetailPage,
+    FindNearestPage,
     TabsPage
   ],
   providers: [
