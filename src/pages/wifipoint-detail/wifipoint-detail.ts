@@ -75,6 +75,7 @@ export class WifipointDetailPage {
         this.map.clear();
         let latLngBounds = new GoogleMapsLatLngBounds([]);
         const currentPositionMrk = {
+          type: 'current-position',
           coords: this.myLatLng,
           title: 'My position'
         };
@@ -82,6 +83,7 @@ export class WifipointDetailPage {
         latLngBounds.extend(this.myLatLng);
         
         let wifipointMrk = {
+          type: 'wifi-point',
           coords: this.wifipointLatLng,
           title: 'Free Wifi!'
         };
@@ -108,6 +110,9 @@ export class WifipointDetailPage {
         position: markerInfo.coords,
         title: markerInfo.title
       };
+      if(markerInfo.type === 'wifi-point') {
+        markerOptions.icon = 'www/assets/wifi/free-wifi-m.png';
+      }
       this.map.addMarker(markerOptions).then((marker: GoogleMapsMarker) => {
           marker.showInfoWindow();
       });
