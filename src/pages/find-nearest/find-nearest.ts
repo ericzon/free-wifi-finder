@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsLatLngBounds,
           Geolocation, GoogleMapsMarker, GoogleMapsMarkerOptions, Toast } from 'ionic-native';
+import { WifipointsService } from '../../providers/wifipoints-service';
+import { WifipointDetailPage } from '../wifipoint-detail/wifipoint-detail';
 
 declare var google;
 
@@ -14,11 +16,13 @@ export class FindNearestPage {
   addressStr: any = "";
   isSearching: boolean = false;
   currentLatLng: any;
+  nearestPointsList: any[] = [];
 
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      public platform: Platform
+      public platform: Platform,
+      public wifipointsService: WifipointsService
     ) {
     platform.ready().then(() => {
       console.log("platform ready!");
@@ -66,10 +70,15 @@ export class FindNearestPage {
 
   searchNearestPoints() {
     this.isSearching = true;
-    //this.currentLatLng
-    setTimeout(()=> {
+    this.wifipointsService.searchNearestPoints(this.currentLatLng).then( bundle => {
       this.isSearching = false;
-    },2000);
+      this.nearestPointsList = bundle;
+    });
   }
 
+  goToDetailPage(wifiPoint: any ) {
+    this.navCtrl.push( WifipointDetailPage, {
+      wifiPoint: wifiPoint,
+    });
+  }
 }

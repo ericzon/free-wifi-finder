@@ -7,15 +7,30 @@
 </ion-header>
 
 <ion-content padding>
-  <div>
-    Your current position:
+  <div class="current-pos-txt">
+    <span *ngIf="isSearching">
+      Finding your current position...
+    </span>
+    <span *ngIf="!isSearching">
+      Your current position:
+    </span>
   </div>
-  <div>
+  <div class="current-address">
     {{ addressStr }}
   </div>
+
+  <button id="search-nearest-but" *ngIf="addressStr" ion-button full color="primary" [disabled]="isSearching" (click)="searchNearestPoints()" round>Let's find some wifis :)</button>
+
   <div *ngIf="isSearching" class="spinner-container" padding>
       <ion-spinner></ion-spinner>
   </div>
-  <button ion-button full color="primary" [disabled]="isSearching" (click)="searchNearestPoints()" round>Let's find a wifi :)</button>
+  <div *ngIf="nearestPointsList.length > 1">
+    Sorted by proximity:
+  </div>
+  <ion-list>
+    <button ion-item  *ngFor="let nearPoint of nearestPointsList" (click)="goToDetailPage( nearPoint )">
+      <ion-icon name="pin"></ion-icon><span padding>{{nearPoint.ADRECA}}</span>
+    </button>
+  </ion-list>
 
 </ion-content>

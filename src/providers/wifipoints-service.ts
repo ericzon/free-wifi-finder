@@ -62,4 +62,21 @@ export class WifipointsService {
     });
   }
 
+  public searchNearestPoints(coords:any):any {
+    return new Promise( (resolve, reject) => {
+      const body = {
+        coords: coords
+      };
+      console.log("POST > searchNearestPoints > coords: ",body);
+      this.http.post(
+          this.config.mainAPIUrl + '/wifipoints/find-nearest',
+          body
+        ).map( res => res.json() )
+        .catch((error:any) => Observable.throw(error.json().error || 'Server error'))
+        .subscribe( data => {
+          resolve(data);
+        });
+    });
+  }
+
 }
